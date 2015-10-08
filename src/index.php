@@ -11,11 +11,14 @@ if($_POST["subscribe"]) {
   $firstname = strip_tags($_POST["firstname"]);
   $secondname = strip_tags($_POST["secondname"]);
   $phonenumber = strip_tags($_POST["phonenumber"]);
-  
-  $players = subscribe($players, $firstname, $secondname, $phonenumber);
 
-  saveplayers($players);
-  header("Location: /");
+  if($firstname != "" && $secondname != "" && $phonenumber != "") {
+    
+    $players = subscribe($players, $firstname, $secondname, $phonenumber);
+
+    saveplayers($players);
+    header("Location: /");
+  }
 }
 
 function subscribe($players, $firstname, $secondname, $phonenumber) {
