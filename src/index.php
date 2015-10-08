@@ -16,8 +16,9 @@ if($_POST["subscribe"]) {
     
     $players = subscribe($players, $firstname, $secondname, $phonenumber);
     saveplayers($players);
-    
-    header("Location: /");
+
+    $originUrl = $_SERVER['REQUEST_URI'];
+    header("Location: $originUrl");
   }
 }
 
