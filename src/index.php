@@ -1,15 +1,5 @@
-<form action="" method="POST">
-  <label for="firsstname">First name</label>
-  <input name="firstname" />
-  <label for="secondname">Second name</label>
-  <input name="secondname" />
-  <label for="phonenumber">Phone number</label>
-  <input name="phonenumber" />
-  <input name="subscribe" type="submit" value="subscribe"/>
-</form>
 <?php
 define("PLAYERFILE", "/tmp/players.txt");
-//$initialPlayers = array(array("firstname" => "marta", "secondname" => "Lucci", "phonenumber" => "123"));
 if(!file_exists(PLAYERFILE))
   saveplayers(array());
 
@@ -20,18 +10,18 @@ if($_POST["subscribe"]) {
   $firstname = strip_tags($_POST["firstname"]);
   $secondname = strip_tags($_POST["secondname"]);
   $phonenumber = strip_tags($_POST["phonenumber"]);
-
   
   $players = subscribe($players, $firstname, $secondname, $phonenumber);
 
   saveplayers($players);
+  header("Location: /");
 }
 
 function subscribe($players, $firstname, $secondname, $phonenumber) {
   $player = array(
-                  "firstname" => $firstname,
-                  "secondname" => $secondname,
-                  "phonenumber" => $phonenumber);
+     "firstname" => $firstname,
+     "secondname" => $secondname,
+     "phonenumber" => $phonenumber);
   $players[] = $player;
   return $players;
 }
@@ -52,6 +42,15 @@ function saveplayers($players) {
 
 
 ?>
+<form action="" method="POST">
+  <label for="firsstname">First name</label>
+  <input name="firstname" />
+  <label for="secondname">Second name</label>
+  <input name="secondname" />
+  <label for="phonenumber">Phone number</label>
+  <input name="phonenumber" />
+  <input name="subscribe" type="submit" value="subscribe"/>
+</form>
 <table>
   <thead>
    <tr>
