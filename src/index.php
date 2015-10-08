@@ -1,5 +1,6 @@
 <?php
 define("PLAYERFILE", "/tmp/players.txt");
+define("NUMBEROFACCEPTEDPLAYERS", 16);
 if(!file_exists(PLAYERFILE))
   saveplayers(array());
 
@@ -38,7 +39,8 @@ function saveplayers($players) {
 }
 
 
-
+$realplayers = array_slice($players, 0, NUMBEROFACCEPTEDPLAYERS);
+$waitinglistplayers = array_slice($players, NUMBEROFACCEPTEDPLAYERS);
 
 
 ?>
@@ -51,6 +53,7 @@ function saveplayers($players) {
   <input name="phonenumber" />
   <input name="subscribe" type="submit" value="subscribe"/>
 </form>
+<h1>List</h1>
 <table>
   <thead>
    <tr>
@@ -62,7 +65,7 @@ function saveplayers($players) {
   <thead>
 
 <?php
-foreach($players as $player):?>
+foreach($realplayers as $player):?>
    <tr>
       <td><?php echo $player["firstname"]?></td>
       <td><?php echo $player["secondname"]?></td>
@@ -72,5 +75,26 @@ foreach($players as $player):?>
 endforeach;?>
 
 </table>
+<h1>Waiting List</h1>
+<table>
+  <thead>
+   <tr>
+      <td>First name</td>
+      <td>Second name</td>
+      <td>Phone number</td>
+   </tr>
+
+  <thead>
+
 <?php
+foreach($waitinglistplayers as $player):?>
+   <tr>
+      <td><?php echo $player["firstname"]?></td>
+      <td><?php echo $player["secondname"]?></td>
+      <td><?php echo $player["phonenumber"]?></td>
+   </tr>
+<?php
+endforeach;?>
+
+</table>
 
