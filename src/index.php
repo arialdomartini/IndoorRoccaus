@@ -1,11 +1,11 @@
 <?php
 define("PLAYERFILE", "/tmp/players.txt");
 define("NUMBEROFACCEPTEDPLAYERS", 16);
+
 if(!file_exists(PLAYERFILE))
   saveplayers(array());
 
 $players = readplayers();
-
 
 if($_POST["subscribe"]) {
   $firstname = strip_tags($_POST["firstname"]);
@@ -15,37 +15,30 @@ if($_POST["subscribe"]) {
   if($firstname != "" && $secondname != "" && $phonenumber != "") {
     
     $players = subscribe($players, $firstname, $secondname, $phonenumber);
-
     saveplayers($players);
+    
     header("Location: /");
   }
 }
 
 function subscribe($players, $firstname, $secondname, $phonenumber) {
-  $player = array(
+  $players[] = array(
      "firstname" => $firstname,
      "secondname" => $secondname,
      "phonenumber" => $phonenumber);
-  $players[] = $player;
   return $players;
 }
 
 function readplayers() {
-  $content = file_get_contents(PLAYERFILE);
-  $decoded = json_decode($content, true);
-  return $decoded;
+  return json_decode(file_get_contents(PLAYERFILE), true);
 }
-
 
 function saveplayers($players) {
   file_put_contents(PLAYERFILE, json_encode($players));
 }
 
-
 $realplayers = array_slice($players, 0, NUMBEROFACCEPTEDPLAYERS);
 $waitinglistplayers = array_slice($players, NUMBEROFACCEPTEDPLAYERS);
-
-
 ?>
 <form action="" method="POST">
   <label for="firsstname">First name</label>
@@ -64,9 +57,7 @@ $waitinglistplayers = array_slice($players, NUMBEROFACCEPTEDPLAYERS);
       <td>Second name</td>
       <td>Phone number</td>
    </tr>
-
   <thead>
-
 <?php
 foreach($realplayers as $player):?>
    <tr>
@@ -76,8 +67,8 @@ foreach($realplayers as $player):?>
    </tr>
 <?php
 endforeach;?>
-
 </table>
+
 <h1>Waiting List</h1>
 <table>
   <thead>
@@ -86,9 +77,7 @@ endforeach;?>
       <td>Second name</td>
       <td>Phone number</td>
    </tr>
-
   <thead>
-
 <?php
 foreach($waitinglistplayers as $player):?>
    <tr>
@@ -98,6 +87,4 @@ foreach($waitinglistplayers as $player):?>
    </tr>
 <?php
 endforeach;?>
-
 </table>
-
