@@ -1,0 +1,76 @@
+.content{
+    margin-top: 75px;
+}
+.messager {
+    font-size: 30px;
+    font-weight: bold;
+    /*max-width: 80%;*/
+    -moz-min-width: 30%;
+    -ms-min-width: 30%;
+    -o-min-width: 30%;
+    -webkit-min-width: 30%;
+    min-width: 30%;
+    margin: auto;
+    -ms-opacity: 0.8;
+    opacity: 0.8;
+}
+
+.messager-med {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.messager.red {
+    font-size: 16px;
+    background-color: #FFF;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.red {
+    color: #d9534f;
+}
+
+.green {
+    color: #5cb85c;
+}
+
+.top25{
+    margin-top: 25px;
+}
+
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-5 {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5 {
+        width: 20%;
+        float: left;
+    }
+}

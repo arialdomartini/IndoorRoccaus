@@ -1,0 +1,23 @@
+{
+  "name": "TennisIndoor",
+  "version": "0.0.1",
+  "description": "Tennis Indoor Registration",
+  "main": "",
+  "moduleType": [
+    "amd"
+  ],
+  "authors": [
+    "Artialdo Martini & Luca Trazzi"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "fontawesome#~4.4.0",
+    "nprogress": "~0.2.0",
+    "blockUI": "blockui#*"
+  }
+}
