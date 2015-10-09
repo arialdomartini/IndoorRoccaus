@@ -13,5 +13,5 @@ function read_tournament() {
 }
 
 function save_tournament($tournament) {
-  file_put_contents(TOURNAMENT_FILE, json_encode($tournament, JSON_FORCE_OBJECT));
+  file_put_contents(TOURNAMENT_FILE, json_encode($tournament, JSON_UNESCAPED_UNICODE));
 }
