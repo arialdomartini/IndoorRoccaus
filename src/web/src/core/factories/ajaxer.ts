@@ -10,14 +10,16 @@ module Core {
 
             var message = "Errore!";
 
-            if (!angular.isUndefined(msg)) {
-                if (!angular.isUndefined(msg.Message)) {
-                    if (msg.Message) {
-                        message = msg.Message;
+            if (msg) {
+                if (!angular.isUndefined(msg)) {
+                    if (!angular.isUndefined(msg.Message)) {
+                        if (msg.Message) {
+                            message = msg.Message;
+                        }
                     }
-                }
-                else {
-                    message = msg;
+                    else {
+                        message = msg;
+                    }
                 }
             }
 
@@ -41,7 +43,7 @@ module Core {
             var config: ng.IRequestConfig = {
                 url: url,
                 method: method
-            }
+            };
 
             if (!angular.isUndefined(opts)) {
                 angular.extend(config, opts);
@@ -64,7 +66,7 @@ module Core {
 
             return def.promise;
         };
-        post<B, V>(url: string, d: B, opts?: ng.IRequestShortcutConfig): ng.IPromise<V> {
+        post<V>(url: string, d: any, opts?: ng.IRequestShortcutConfig): ng.IPromise<V> {
 
             var def = this.$q.defer<V>();
 

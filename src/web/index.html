@@ -7,18 +7,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Tennis Indoor">
 	<meta name="author" content="">
-	<link rel="icon" href="favicon.ico">
+	<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="manifest.json">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+	<meta name="theme-color" content="#ffffff">
 
 	<title>Indoor Tennis Registration</title>
 
 	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<link href="bower_components/nprogress/nprogress.css" rel="stylesheet">
+	<link href="bower_components/toastr/toastr.css" rel="stylesheet">
 	<link href="content/css/custom.css" rel="stylesheet">
 </head>
 
-<body ng-app="app">>
-
+<body ng-app="app">
+	<notify></notify>
+	
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -29,22 +47,22 @@
 
 	<div class="container content" ng-controller="main">
 		<div data-locker="lock">
-			<form>
+			<form name="regForm">
 				<div class="row">
 					<div class="form-group col-sm-12 col-md-4">
 						<label>First Name</label>
-						<input type="text" class="form-control" name="inpFirstName" placeholder="First Name" ng-model="item.FirstName">
+						<input type="text" class="form-control" name="inpFirstName" placeholder="First Name" ng-model="item.firstname" validator="req">
 					</div>
 					<div class="form-group col-sm-12 col-md-4">
 						<label>Last Name</label>
-						<input type="text" class="form-control" name="inpLastName" placeholder="Last Name" ng-model="item.LastName">
+						<input type="text" class="form-control" name="inpLastName" placeholder="Last Name" ng-model="item.lastname" validator="req">
 					</div>
 					<div class="form-group col-sm-12 col-md-4">
 						<label>Phone Number</label>
-						<input type="text" class="form-control" name="inpPhoneNumber" placeholder="Phone Number" ng-model="item.PhoneNumber">
+						<input type="text" class="form-control" name="inpPhoneNumber" placeholder="Phone Number" ng-model="item.phonenumber" validator="req">
 					</div>
 				</div>
-				<button class="btn btn-success" ng-click="add()"><i class="fa fa-plus"></i>&nbsp;Aggiungi</button>
+				<button class="btn btn-success" ng-click="add()" validation-submit="regForm"><i class="fa fa-plus"></i>&nbsp;Aggiungi</button>
 			</form>
 
 			<div class="top25">
@@ -52,15 +70,14 @@
 					<div class="list-group-item list-group-item-info">
 						Spieler Liste (Max <span ng-bind="max"></span>)
 					</div>
-					<div class="list-group-item" ng-repeat="reg in registrations track by reg.Id">
-						<div class="col-sm-12 col-md-5"><span ng-bind="$index + 1"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="reg.Date | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="reg.Person.FirstName"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="reg.Person.LastName"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="reg.Person.PhoneNumber"></span></div>
+					<div class="list-group-item" ng-repeat="reg in data.players track by reg.id">
+						<div class="col-sm-12 col-md-4"><span ng-bind="$index + 1"></span></div>
+						<div class="col-sm-12 col-md-4"><span ng-bind="reg.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
+						<div class="col-sm-12 col-md-4"><span ng-bind="reg.firstname"></span></div>
+						<div class="col-sm-12 col-md-4"><span ng-bind="reg.lastname"></span></div>
 						<div class="clearfix"></div>
 					</div>
-					<div class="list-group-item" ng-show="registrations.length === 0">
+					<div class="list-group-item" ng-show="data.players.length === 0">
 						Nessuna registrazione attiva
 					</div>
 				</div>
@@ -68,15 +85,14 @@
 					<div class="list-group-item list-group-item-info">
 						Waiting List
 					</div>
-					<div class="list-group-item" ng-repeat="wait in waitings track by wait.Id">
-						<div class="col-sm-12 col-md-5"><span ng-bind="$index + 1"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="wait.Date | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="wait.Person.FirstName"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="wait.Person.LastName"></span></div>
-						<div class="col-sm-12 col-md-5"><span ng-bind="wait.Person.PhoneNumber"></span></div>
+					<div class="list-group-item" ng-repeat="wait in data.waiters track by wait.Id">
+						<div class="col-sm-12 col-md-4"><span ng-bind="$index + 1"></span></div>
+						<div class="col-sm-12 col-md-4"><span ng-bind="wait.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
+						<div class="col-sm-12 col-md-4"><span ng-bind="wait.firstname"></span></div>
+						<div class="col-sm-12 col-md-4"><span ng-bind="wait.lastname"></span></div>
 						<div class="clearfix"></div>
 					</div>
-					<div class="list-group-item" ng-show="waitings.length === 0">
+					<div class="list-group-item" ng-show="data.waiters.length === 0">
 						Nessuna registrazione in lista di attesa
 					</div>
 				</div>
@@ -88,6 +104,8 @@
 		<script src="bower_components/nprogress/nprogress.js"></script>
 		<script src="bower_components/nprogress/nprogress.js"></script>
 		<script src="bower_components/blockui/jquery.blockUI.js"></script>
+		<script src="bower_components/angular-validation/dist/angular-validation.js"></script>
+		<script src="bower_components/toastr/toastr.js"></script>
 
 		<script src="app/app/app.js"></script>
 		<script src="app/app/controllers/main.js"></script>
@@ -95,6 +113,7 @@
 		<script src="app/core/factories/ajaxer.js"></script>
 		<script src="app/core/factories/locker.js"></script>
 		<script src="app/core/directives/locker.js"></script>
+		<script src="app/core/directives/notify.js"></script>
 		<script src="app/core/factories/guid.js"></script>
 </body>
 

@@ -2,38 +2,52 @@
 var App;
 (function (App) {
     var Registration = (function () {
-        function Registration(Id, Person) {
-            this.Id = Id;
-            this.Person = Person;
-            this.Date = new Date();
+        function Registration() {
         }
         return Registration;
     })();
-    var Person = (function () {
-        function Person() {
+    var GetTournamentViewModel = (function () {
+        function GetTournamentViewModel() {
+            this.players = [];
+            this.waiters = [];
         }
-        return Person;
+        return GetTournamentViewModel;
     })();
     angular.module('app')
         .controller("main", ["$scope", "$timeout", "ajaxer", "guid", function ($scope, $timeout, ajaxer, guid) {
-            $scope.item = new Person();
-            $scope.max = 3;
-            $scope.registrations = [];
-            $scope.waitings = [];
+            $scope.item = new Registration();
+            $scope.item.id = guid.Generate();
+            $scope.max = 16;
+            $scope.data = new GetTournamentViewModel();
             $scope.add = function () {
                 $scope.lock = true;
-                $timeout(function () {
-                    $scope.lock = { Type: 1, Message: "Aggiunto!" };
-                    var copy = new Person();
-                    angular.merge(copy, $scope.item);
-                    var registration = new Registration(guid.Generate(), copy);
-                    if ($scope.registrations.length >= $scope.max) {
-                        $scope.waitings.push(registration);
+                ajaxer.post("post-new-subscription.php", $scope.item).then(function (d) {
+                    switch (d.result) {
+                        case "player":
+                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto!"));
+                            break;
+                        case "waiter":
+                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto alla lista di attesa!"));
+                            break;
                     }
-                    else {
-                        $scope.registrations.push(registration);
-                    }
-                }, 2000);
+                }, function (d) {
+                    $scope.lock = false;
+                    $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Error, d));
+                }).finally(function () {
+                    fetch();
+                });
+                ;
             };
+            function fetch() {
+                $scope.lock = true;
+                ajaxer.get("get-tournament.php").then(function (d) {
+                    $scope.lock = false;
+                    $scope.data = d;
+                }, function (d) {
+                    $scope.lock = false;
+                    $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Error, d));
+                });
+            }
+            fetch();
         }]);
 })(App || (App = {}));
