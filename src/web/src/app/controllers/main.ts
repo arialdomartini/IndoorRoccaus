@@ -5,48 +5,73 @@ module App {
     interface IMainScope extends ng.IScope {
         max: number;
         lock: any;
-        item: Person;
-        registrations: Array<Registration>;
-        waitings: Array<Registration>;
+        item: Registration;
+        data: IGetTournamentViewModel;
 
         add();
     }
 
     class Registration {
-        Date: Date;
-
-        constructor(private Id: string, private Person: Person) {
-            this.Date = new Date();
-        }
+        id: string
+        registeredat: Date;
+        firstname: string;
+        lastname: string;
+        phonenumber: string;
     }
 
-    class Person {
-        FirstName: string;
-        LastName: string;
-        PhoneNumber: string;
+    interface IGetTournamentViewModel {
+        players: Array<Registration>;
+        waiters: Array<Registration>;
+    }
+
+    class GetTournamentViewModel implements IGetTournamentViewModel {
+        players: Array<Registration> = [];
+        waiters: Array<Registration> = [];
+    }
+
+    interface INewSubscriptionViewModel {
+        result: string;
     }
 
     angular.module('app')
         .controller("main", ["$scope", "$timeout", "ajaxer", "guid", ($scope: IMainScope, $timeout: ng.ITimeoutService, ajaxer: Core.Ajaxer, guid: Core.Guid) => {
-            $scope.item = new Person();
-            $scope.max = 3;
-            $scope.registrations = [];
-            $scope.waitings = [];
+            $scope.item = new Registration();
+            $scope.item.id = guid.Generate();
+            $scope.max = 16;
+
+            $scope.data = new GetTournamentViewModel();
 
             $scope.add = () => {
                 $scope.lock = true;
-                $timeout(() => {
-                    $scope.lock = { Type : 1, Message: "Aggiunto!"};
-                    let copy = new Person();
-                    angular.merge(copy, $scope.item);
-                    let registration = new Registration(guid.Generate(), copy);
-                    if ($scope.registrations.length >= $scope.max) {
-                        $scope.waitings.push(registration);
-                    }
-                    else {
-                        $scope.registrations.push(registration);
-                    }
-                }, 2000);
+
+                ajaxer.post("post-new-subscription.php", $scope.item).then((d: INewSubscriptionViewModel) => {                    
+                    switch (d.result) {
+                        case "player":
+                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto!"));
+                            break;
+                        case "waiter":
+                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto alla lista di attesa!"));
+                            break;
+                    }                    
+                }, (d) => {
+                    $scope.lock = false;
+                    $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Error, d));
+
+                }).finally(() => {
+                    fetch();
+                });;
             };
+
+            function fetch() {
+                $scope.lock = true;
+                ajaxer.get<IGetTournamentViewModel>("get-tournament.php").then((d: IGetTournamentViewModel) => {                    
+                    $scope.lock = false;
+                    $scope.data = d;
+                }, (d) => {
+                    $scope.lock = false;
+                    $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Error, d));
+                });
+            }
+            fetch();
         }]);
 }

@@ -9,14 +9,16 @@ var Core;
         Ajaxer.prototype.handleError = function (def, msg, code) {
             if (code === void 0) { code = 200; }
             var message = "Errore!";
-            if (!angular.isUndefined(msg)) {
-                if (!angular.isUndefined(msg.Message)) {
-                    if (msg.Message) {
-                        message = msg.Message;
+            if (msg) {
+                if (!angular.isUndefined(msg)) {
+                    if (!angular.isUndefined(msg.Message)) {
+                        if (msg.Message) {
+                            message = msg.Message;
+                        }
                     }
-                }
-                else {
-                    message = msg;
+                    else {
+                        message = msg;
+                    }
                 }
             }
             switch (code) {

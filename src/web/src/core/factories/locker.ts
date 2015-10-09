@@ -17,20 +17,19 @@ module Core {
                     overlayCSS: { opacity: .6, 'border-radius': '4px' },
                     bindEvents: true,
                     baseZ: 1060,
-                    // message: '<img width="100%" alt="loading.." src="/content/images/loading/loading.svg">',
-                    message: '',
+                    message: '<img width="100%" alt="loading.." src="content/images/loading.svg">',
                     centerY: true
                 };
 
                 if (extOpts) {
 
-                    // if (extOpts.width && extOpts.height) {
-                    //     opts.message = '<img width="' + extOpts.width + '" height="' + extOpts.height + '" alt="" src="/content/images/loading/loading.svg">';
-                    // }
+                    if (extOpts.width && extOpts.height) {
+                        opts.message = '<img width="' + extOpts.width + '" height="' + extOpts.height + '" alt="" src="content/images/loading.svg">';
+                    }
 
                     $.extend(opts, extOpts);
                 }
-                
+
                 NProgress.start();
                 if (element) {
                     $(element).block(opts);
