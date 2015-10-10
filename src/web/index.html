@@ -47,7 +47,7 @@
 
 	<div class="container content" ng-controller="main">
 		<div data-locker="lock">
-			<form name="regForm">
+			<div ng-form="regForm" name="regForm">
 				<div class="row">
 					<div class="form-group col-sm-12 col-md-4">
 						<label>First Name</label>
@@ -70,11 +70,11 @@
 					<div class="list-group-item list-group-item-info">
 						Spieler Liste (Max <span ng-bind="max"></span>)
 					</div>
-					<div class="list-group-item" ng-repeat="reg in data.players track by reg.id">
-						<div class="col-sm-12 col-md-4"><span ng-bind="$index + 1"></span></div>
-						<div class="col-sm-12 col-md-4"><span ng-bind="reg.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
-						<div class="col-sm-12 col-md-4"><span ng-bind="reg.firstname"></span></div>
-						<div class="col-sm-12 col-md-4"><span ng-bind="reg.lastname"></span></div>
+					<div class="list-group-item" ng-repeat="reg in data.players">
+						<div class="col-sm-12 col-md-3"><span ng-bind="$index + 1"></span></div>
+						<div class="col-sm-12 col-md-3"><span ng-bind="reg.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
+						<div class="col-sm-12 col-md-3"><span ng-bind="reg.firstname"></span></div>
+						<div class="col-sm-12 col-md-3"><span ng-bind="reg.lastname"></span></div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="list-group-item" ng-show="data.players.length === 0">
@@ -85,11 +85,11 @@
 					<div class="list-group-item list-group-item-info">
 						Waiting List
 					</div>
-					<div class="list-group-item" ng-repeat="wait in data.waiters track by wait.Id">
-						<div class="col-sm-12 col-md-4"><span ng-bind="$index + 1"></span></div>
-						<div class="col-sm-12 col-md-4"><span ng-bind="wait.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
-						<div class="col-sm-12 col-md-4"><span ng-bind="wait.firstname"></span></div>
-						<div class="col-sm-12 col-md-4"><span ng-bind="wait.lastname"></span></div>
+					<div class="list-group-item" ng-repeat="wait in data.waiters">
+						<div class="col-sm-12 col-md-3"><span ng-bind="$index + 1"></span></div>
+						<div class="col-sm-12 col-md-3"><span ng-bind="wait.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
+						<div class="col-sm-12 col-md-3"><span ng-bind="wait.firstname"></span></div>
+						<div class="col-sm-12 col-md-3"><span ng-bind="wait.lastname"></span></div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="list-group-item" ng-show="data.waiters.length === 0">
