@@ -8,7 +8,7 @@ $player = array(
                 "id" => $request["id"],
                 "registeredat" => $now,
                 "firstname" => $request["firstname"],
-                "secondname" => $request["secondname"],
+                "lastname" => $request["lastname"],
                 "phonenumber" => $request["phonenumber"]);
 
 $tournment = read_tournament();
