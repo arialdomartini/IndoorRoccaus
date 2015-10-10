@@ -5,6 +5,7 @@ module Core {
 
     export enum NotifyTypes {
         Info,
+        Warning,
         Error
     }
     export class NotifyMessage {
@@ -31,7 +32,7 @@ module Core {
                         "onclick": null,
                         "showDuration": 300,
                         "hideDuration": 1000,
-                        "timeOut": 10000,
+                        "timeOut": 20000,
                         "extendedTimeOut": 1000,
                         "showEasing": "swing",
                         "hideEasing": "linear",
@@ -46,6 +47,11 @@ module Core {
                                 case NotifyTypes.Info:
                                     {
                                         toastr.info(d.Message)
+                                        break;
+                                    }
+                                case NotifyTypes.Warning:
+                                    {
+                                        toastr.warning(d.Message)
                                         break;
                                     }
                                 case NotifyTypes.Error:

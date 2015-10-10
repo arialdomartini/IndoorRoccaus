@@ -19,7 +19,7 @@ var Core;
                     overlayCSS: { opacity: .6, 'border-radius': '4px' },
                     bindEvents: true,
                     baseZ: 1060,
-                    message: '<img width="100%" alt="loading.." src="content/images/loading.svg">',
+                    message: '<img width="100%" height="120" alt="loading.." src="content/images/loading.svg">',
                     centerY: true
                 };
                 if (extOpts) {

@@ -4,7 +4,8 @@ var Core;
 (function (Core) {
     (function (NotifyTypes) {
         NotifyTypes[NotifyTypes["Info"] = 0] = "Info";
-        NotifyTypes[NotifyTypes["Error"] = 1] = "Error";
+        NotifyTypes[NotifyTypes["Warning"] = 1] = "Warning";
+        NotifyTypes[NotifyTypes["Error"] = 2] = "Error";
     })(Core.NotifyTypes || (Core.NotifyTypes = {}));
     var NotifyTypes = Core.NotifyTypes;
     var NotifyMessage = (function () {
@@ -30,7 +31,7 @@ var Core;
                         "onclick": null,
                         "showDuration": 300,
                         "hideDuration": 1000,
-                        "timeOut": 10000,
+                        "timeOut": 20000,
                         "extendedTimeOut": 1000,
                         "showEasing": "swing",
                         "hideEasing": "linear",
@@ -43,6 +44,11 @@ var Core;
                                 case NotifyTypes.Info:
                                     {
                                         toastr.info(d.Message);
+                                        break;
+                                    }
+                                case NotifyTypes.Warning:
+                                    {
+                                        toastr.warning(d.Message);
                                         break;
                                     }
                                 case NotifyTypes.Error:
