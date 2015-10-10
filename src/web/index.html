@@ -48,7 +48,7 @@
 
 	<div class="container content" ng-controller="main">
 		<div data-locker="lock">
-			<div ng-form="regForm" name="regForm">
+			<div ng-form="regForm" name="regForm" on-enter-validate="regForm" on-enter-validated="add()">
 				<div class="row">
 					<div class="form-group col-sm-12 col-md-4">
 						<label>First Name</label>
@@ -115,6 +115,7 @@
 		<script src="app/core/factories/locker.js"></script>
 		<script src="app/core/directives/locker.js"></script>
 		<script src="app/core/directives/notify.js"></script>
+		<script src="app/core/directives/on-enter-validate.js"></script>
 		<script src="app/core/factories/guid.js"></script>
 </body>
 
