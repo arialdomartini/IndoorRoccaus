@@ -9,7 +9,8 @@ if(!file_exists(TOURNAMENT_FILE)) {
 }
   
 function read_tournament() {
-  return json_decode(file_get_contents(TOURNAMENT_FILE));
+  $filecontent = file_get_contents(TOURNAMENT_FILE);
+  return json_decode($filecontent, true);
 }
 
 function save_tournament($tournament) {
