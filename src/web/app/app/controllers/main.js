@@ -24,7 +24,7 @@ var App;
                 ajaxer.post("post-new-subscription.php", $scope.item).then(function (d) {
                     switch (d.result) {
                         case "player":
-                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto!"));
+                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Your subscription is confirmed. Thank you!"));
                             break;
                         case "waiter":
                             $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Unfortunately the maximum number of participants has been reached. Sorry for that :-( You are not subscribed to the tournament but your name will be added to the “Waiting List” in case of a registered player will unsubscribe."));
