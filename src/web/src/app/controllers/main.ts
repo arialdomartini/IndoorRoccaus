@@ -50,7 +50,7 @@ module App {
                             $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto!"));
                             break;
                         case "waiter":
-                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Aggiunto alla lista di attesa!"));
+                            $scope.$emit("notifier", new Core.NotifyMessage(Core.NotifyTypes.Info, "Unfortunately the maximum number of participants has been reached. Sorry for that :-( You are not subscribed to the tournament but your name will be added to the “Waiting List” in case of a registered player will unsubscribe."));
                             break;
                     }                    
                 }, (d) => {
