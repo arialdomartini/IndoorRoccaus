@@ -83,3 +83,7 @@
     height: 50px;
     float: right;
 }
+
+#toast-container{
+    top: 50%;
+}
