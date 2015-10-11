@@ -24,7 +24,7 @@ module App {
             }
             var defaultMsg = {
                 req: {
-                    error: 'Obbligatorio',
+                    error: 'Mandatory',
                     success: ''
                 }
             }
