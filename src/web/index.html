@@ -36,13 +36,13 @@
 
 <body ng-app="app">
 	<notify></notify>
-	
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header hidden-xs">
-				<a class="navbar-brand" href="#"><i class="fa fa-rocket"></i>&nbsp;Indoor Tennis Registration</a>				
+				<a class="navbar-brand" href="#"><i class="fa fa-rocket"></i>&nbsp;Indoor Tennis Registration</a>
 			</div>
-			<img src="content/images/aduno/smart.png" class="logo"/>
+			<img src="content/images/aduno/smart.png" class="logo" />
 		</div>
 	</nav>
 
@@ -64,59 +64,62 @@
 					</div>
 				</div>
 				<button class="btn btn-success" ng-click="add()" validation-submit="regForm"><i class="fa fa-plus"></i>&nbsp;Subscribe to the Tournament</button>
-			</form>
+				</form>
 
-			<div class="top25">
-				<div class="list-group">
-					<div class="list-group-item list-group-item-info">
-						Spieler Liste (Max <span ng-bind="max"></span>)
+				<div class="top25">
+					<div class="list-group">
+						<div class="list-group-item list-group-item-info">
+							Spieler Liste (Max <span ng-bind="max"></span>)
+						</div>
+						<div class="list-group-item" ng-repeat="reg in data.players">
+							<div class="col-sm-12 col-md-3"><span ng-bind="$index + 1"></span></div>
+							<div class="col-sm-12 col-md-3"><span ng-bind="reg.registeredat | utctolocal : 'yyyy-MM-dd HH:mm:ss'"></span></div>
+							<div class="col-sm-12 col-md-3"><span ng-bind="reg.firstname"></span></div>
+							<div class="col-sm-12 col-md-3"><span ng-bind="reg.lastname"></span></div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="list-group-item" ng-show="data.players.length === 0">
+							Nessuna registrazione attiva
+						</div>
 					</div>
-					<div class="list-group-item" ng-repeat="reg in data.players">
-						<div class="col-sm-12 col-md-3"><span ng-bind="$index + 1"></span></div>
-						<div class="col-sm-12 col-md-3"><span ng-bind="reg.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
-						<div class="col-sm-12 col-md-3"><span ng-bind="reg.firstname"></span></div>
-						<div class="col-sm-12 col-md-3"><span ng-bind="reg.lastname"></span></div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="list-group-item" ng-show="data.players.length === 0">
-						Nessuna registrazione attiva
-					</div>
-				</div>
-				<div class="list-group">
-					<div class="list-group-item list-group-item-info">
-						Waiting List
-					</div>
-					<div class="list-group-item" ng-repeat="wait in data.waiters">
-						<div class="col-sm-12 col-md-3"><span ng-bind="$index + 1"></span></div>
-						<div class="col-sm-12 col-md-3"><span ng-bind="wait.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
-						<div class="col-sm-12 col-md-3"><span ng-bind="wait.firstname"></span></div>
-						<div class="col-sm-12 col-md-3"><span ng-bind="wait.lastname"></span></div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="list-group-item" ng-show="data.waiters.length === 0">
-						Nessuna registrazione in lista di attesa
+					<div class="list-group">
+						<div class="list-group-item list-group-item-info">
+							Waiting List
+						</div>
+						<div class="list-group-item" ng-repeat="wait in data.waiters">
+							<div class="col-sm-12 col-md-3"><span ng-bind="$index + 1"></span></div>
+							<div class="col-sm-12 col-md-3"><span ng-bind="wait.registeredat | date : 'yyyy-MM-dd HH:mm:ss'"></span></div>
+							<div class="col-sm-12 col-md-3"><span ng-bind="wait.firstname"></span></div>
+							<div class="col-sm-12 col-md-3"><span ng-bind="wait.lastname"></span></div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="list-group-item" ng-show="data.waiters.length === 0">
+							Nessuna registrazione in lista di attesa
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<script src="bower_components/jquery/dist/jquery.js"></script>
-		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="bower_components/angular/angular.js"></script>
-		<script src="bower_components/nprogress/nprogress.js"></script>
-		<script src="bower_components/nprogress/nprogress.js"></script>
-		<script src="bower_components/blockui/jquery.blockUI.js"></script>
-		<script src="bower_components/angular-validation/dist/angular-validation.js"></script>
-		<script src="bower_components/toastr/toastr.js"></script>
+			<script src="bower_components/jquery/dist/jquery.js"></script>
+			<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+			<script src="bower_components/angular/angular.js"></script>
+			<script src="bower_components/nprogress/nprogress.js"></script>
+			<script src="bower_components/nprogress/nprogress.js"></script>
+			<script src="bower_components/blockui/jquery.blockUI.js"></script>
+			<script src="bower_components/angular-validation/dist/angular-validation.js"></script>
+			<script src="bower_components/toastr/toastr.js"></script>
+			<script src="bower_components/moment/moment.js"></script>
+			<script src="bower_components/moment-timezone/moment-timezone.js"></script>
 
-		<script src="app/app/app.js"></script>
-		<script src="app/app/controllers/main.js"></script>
-		<script src="app/core/core.js"></script>
-		<script src="app/core/factories/ajaxer.js"></script>
-		<script src="app/core/factories/locker.js"></script>
-		<script src="app/core/directives/locker.js"></script>
-		<script src="app/core/directives/notify.js"></script>
-		<script src="app/core/directives/on-enter-validate.js"></script>
-		<script src="app/core/factories/guid.js"></script>
+			<script src="app/app/app.js"></script>
+			<script src="app/app/controllers/main.js"></script>
+			<script src="app/core/core.js"></script>
+			<script src="app/core/factories/ajaxer.js"></script>
+			<script src="app/core/factories/locker.js"></script>
+			<script src="app/core/directives/locker.js"></script>
+			<script src="app/core/directives/notify.js"></script>
+			<script src="app/core/directives/on-enter-validate.js"></script>
+			<script src="app/core/filters/utc-to-local.js"></script>
+			<script src="app/core/factories/guid.js"></script>
 </body>
 
 </html>

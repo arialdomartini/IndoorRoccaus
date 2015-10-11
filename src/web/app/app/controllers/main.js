@@ -43,7 +43,7 @@ var App;
             };
             function fetch() {
                 $scope.lock = true;
-                ajaxer.get("get-tournament.php").then(function (d) {
+                ajaxer.get("http://www.robbiani.net/adunoindoor/get-tournament.php").then(function (d) {
                     $scope.lock = false;
                     $scope.data = d;
                 }, function (d) {

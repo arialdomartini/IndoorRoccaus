@@ -70,8 +70,8 @@ module App {
 
             function fetch() {
                 $scope.lock = true;
-                ajaxer.get<IGetTournamentViewModel>("get-tournament.php").then((d: IGetTournamentViewModel) => {
-                    $scope.lock = false;
+                ajaxer.get<IGetTournamentViewModel>("http://www.robbiani.net/adunoindoor/get-tournament.php").then((d: IGetTournamentViewModel) => {
+                    $scope.lock = false;                    
                     $scope.data = d;
                 }, (d) => {
                     $scope.lock = false;
